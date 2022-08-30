@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>917</width>
-    <height>793</height>
+    <width>717</width>
+    <height>574</height>
    </rect>
   </property>
   <property name="font">
@@ -19,12 +19,15 @@
   <property name="windowTitle">
    <string>LS336 Control</string>
   </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLineEdit" name="savePath">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>370</y>
+      <x>20</x>
+      <y>350</y>
       <width>261</width>
       <height>20</height>
      </rect>
@@ -194,7 +197,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>180</y>
+      <y>160</y>
       <width>261</width>
       <height>151</height>
      </rect>
@@ -240,13 +243,13 @@
       <string>Heater Off</string>
      </property>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>10</x>
        <y>20</y>
        <width>241</width>
-       <height>28</height>
+       <height>29</height>
       </rect>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
@@ -294,13 +297,13 @@
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>10</x>
        <y>90</y>
-       <width>239</width>
-       <height>28</height>
+       <width>254</width>
+       <height>29</height>
       </rect>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -352,7 +355,7 @@
       <x>340</x>
       <y>20</y>
       <width>361</width>
-      <height>441</height>
+      <height>511</height>
      </rect>
     </property>
     <property name="font">
@@ -370,7 +373,7 @@
        <x>10</x>
        <y>19</y>
        <width>341</width>
-       <height>411</height>
+       <height>481</height>
       </rect>
      </property>
     </widget>
@@ -378,8 +381,8 @@
    <widget class="QLabel" name="label_13">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>340</y>
+      <x>20</x>
+      <y>320</y>
       <width>101</width>
       <height>21</height>
      </rect>

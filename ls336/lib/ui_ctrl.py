@@ -11,5 +11,5 @@ from ls336.ui import ls336ui
 
 
 class ctrl_ui():
-    def __init__(self, ui)
-    self._ui = ui
+    def __init__(self, ui):
+        self._ui = ui
