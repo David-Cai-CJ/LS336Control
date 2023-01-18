@@ -6,7 +6,7 @@ from lakeshore.model_336 import Model336HeaterRange
 
 
 class local_intrument():
-    def __init__(self):
+    def __init__(self, heater_channel):
         self.instrument = self.connect_ls336()
         self.heater_range = {
                             'OFF': Model336HeaterRange.OFF, 
@@ -14,6 +14,7 @@ class local_intrument():
                             'MID': Model336HeaterRange.MEDIUM,
                             'HI': Model336HeaterRange.HIGH
                             }
+        self.heater_channel = heater_channel
 
 ### Properties
 
@@ -37,30 +38,40 @@ class local_intrument():
 
     @property
     def get_heater_power(self):
-        """Returns the output percentage of heater 1 (in reference to the chosen output range)
+        """Returns the output percentage of heater self.heater_channel (in reference to the chosen output range)
 
         Returns:
             float: output percentage of full scale of current heater range of output channel
         """
-        return self.instrument.get_heater_output(1)
+        return self.instrument.get_heater_output(self.heater_channel)
 
     @property
     def get_setpoint(self):
-        """Returns the setpoint of output 1
+        """Returns the setpoint of output self.heater_channel
 
         Returns:
-            float: setpoint value in kelvin (preferred units of output 1)
+            float: setpoint value in kelvin (preferred units of output self.heater_channel)
         """
-        return self.instrument.get_control_setpoint(1)
+        return self.instrument.get_control_setpoint(self.heater_channel)
 
     @property
     def get_heater_range(self):
-        """Return current heater range setting of output 1
+        """Return current heater range setting of output self.heater_channel
 
         Returns:
             Model336HeaterRange entry: heater range
         """
-        return self.instrument.get_heater_range(1)
+        return self.instrument.get_heater_range(self.heater_channel)
+
+    @property
+    def get_heater_pid(self):
+        """ returns the P, I and D values of the closed loop controler of output self.heater_channel
+
+        :return: tuple of floats (P, I, D)
+        """
+        _pid_dict = self.get_heater_pid(self.heater_channel)
+        p, i ,d = _pid_dict["gain"], _pid_dict["integral"], _pid_dict["ramp_rate"]
+        return (p,i,d)
 
 ### Methods
     
@@ -73,7 +84,7 @@ class local_intrument():
         return Model336()
 
     def set_setpoint(self, setpoint):
-        """Sets the temperature setpoint of heater output 1
+        """Sets the temperature setpoint of heater output self.heater_channel
 
         Args:
             setpoint (float): temperature setpoint in Kelvin
@@ -84,7 +95,7 @@ class local_intrument():
         Returns:
             float: new temperature setpoint in Kelvin
         """
-        self.instrument.set_control_setpoint(1, setpoint)
+        self.instrument.set_control_setpoint(self.heater_channel, setpoint)
         setpoint_new = self.get_setpoint
         if setpoint_new != setpoint:
             raise CommunicationFailure("Setpoint was not set correctly!")
@@ -102,7 +113,7 @@ class local_intrument():
         Returns:
             Model336HeaterRange entry: returns entry of IntEnum corresponding to set heater range
         """
-        self.instrument.set_heater_range(1, self.heater_range[range])
+        self.instrument.set_heater_range(self.heater_channel, self.heater_range[range])
         new_range = self.get_heater_range
         if new_range != self.heater_range[range]:
             raise CommunicationFailure("Heater was not set correctly")

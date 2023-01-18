@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>717</width>
-    <height>574</height>
+    <height>575</height>
    </rect>
   </property>
   <property name="font">
@@ -27,20 +27,20 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>350</y>
+      <y>320</y>
       <width>261</width>
       <height>20</height>
      </rect>
     </property>
     <property name="text">
-     <string>ls336_log.txt</string>
+     <string>ls336_log</string>
     </property>
    </widget>
-   <widget class="QGroupBox" name="groupBox">
+   <widget class="QGroupBox" name="liveParametersBox">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>40</y>
+      <y>20</y>
       <width>271</width>
       <height>111</height>
      </rect>
@@ -70,9 +70,11 @@
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="2">
-       <widget class="QLabel" name="label_5">
+       <widget class="QLabel" name="displaySampleTempUnit">
         <property name="font">
          <font>
+          <family>Arial</family>
+          <pointsize>12</pointsize>
           <weight>50</weight>
           <bold>false</bold>
          </font>
@@ -83,9 +85,11 @@
        </widget>
       </item>
       <item row="1" column="2">
-       <widget class="QLabel" name="label_8">
+       <widget class="QLabel" name="displayTipTempUnit">
         <property name="font">
          <font>
+          <family>Arial</family>
+          <pointsize>12</pointsize>
           <weight>50</weight>
           <bold>false</bold>
          </font>
@@ -96,9 +100,11 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QLabel" name="displayHeater">
+       <widget class="QLabel" name="displayTipTemp">
         <property name="font">
          <font>
+          <family>Arial</family>
+          <pointsize>12</pointsize>
           <weight>50</weight>
           <bold>false</bold>
          </font>
@@ -112,9 +118,11 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QLabel" name="displayTemp">
+       <widget class="QLabel" name="displaySampleTemp">
         <property name="font">
          <font>
+          <family>Arial</family>
+          <pointsize>12</pointsize>
           <weight>50</weight>
           <bold>false</bold>
          </font>
@@ -128,9 +136,11 @@
        </widget>
       </item>
       <item row="0" column="0">
-       <widget class="QLabel" name="label_4">
+       <widget class="QLabel" name="displaySampleTempLabel">
         <property name="font">
          <font>
+          <family>Arial</family>
+          <pointsize>12</pointsize>
           <weight>50</weight>
           <bold>false</bold>
          </font>
@@ -141,9 +151,11 @@
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QLabel" name="label_6">
+       <widget class="QLabel" name="displayTipTempLabel">
         <property name="font">
          <font>
+          <family>Arial</family>
+          <pointsize>12</pointsize>
           <weight>50</weight>
           <bold>false</bold>
          </font>
@@ -154,9 +166,11 @@
        </widget>
       </item>
       <item row="2" column="0">
-       <widget class="QLabel" name="label_2">
+       <widget class="QLabel" name="displayHeaterPowerLabel">
         <property name="font">
          <font>
+          <family>Arial</family>
+          <pointsize>12</pointsize>
           <weight>50</weight>
           <bold>false</bold>
           <kerning>true</kerning>
@@ -168,9 +182,11 @@
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QLabel" name="label_3">
+       <widget class="QLabel" name="displayHeaterPower">
         <property name="font">
          <font>
+          <family>Arial</family>
+          <pointsize>12</pointsize>
           <weight>50</weight>
           <bold>false</bold>
          </font>
@@ -184,7 +200,7 @@
        </widget>
       </item>
       <item row="2" column="2">
-       <widget class="QLabel" name="label_7">
+       <widget class="QLabel" name="displayHeaterPowerUnit">
         <property name="text">
          <string>%</string>
         </property>
@@ -193,17 +209,19 @@
      </layout>
     </widget>
    </widget>
-   <widget class="QGroupBox" name="groupBox_2">
+   <widget class="QGroupBox" name="yemperatureControlBox">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>160</y>
-      <width>261</width>
+      <y>140</y>
+      <width>271</width>
       <height>151</height>
      </rect>
     </property>
     <property name="font">
      <font>
+      <family>Arial</family>
+      <pointsize>12</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -211,7 +229,7 @@
     <property name="title">
      <string>Temperature Control</string>
     </property>
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="heaterSettingLabel">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -224,7 +242,7 @@
       <string>Heater Setting</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="setSetPoint_5">
+    <widget class="QPushButton" name="setHeaterSettingOff">
      <property name="geometry">
       <rect>
        <x>70</x>
@@ -235,12 +253,17 @@
      </property>
      <property name="font">
       <font>
+       <family>Arial</family>
+       <pointsize>12</pointsize>
        <weight>50</weight>
        <bold>false</bold>
       </font>
      </property>
      <property name="text">
       <string>Heater Off</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
      </property>
     </widget>
     <widget class="QWidget" name="layoutWidget">
@@ -252,24 +275,28 @@
        <height>29</height>
       </rect>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout">
+     <layout class="QHBoxLayout" name="setSetPointhorizontalLayout">
       <item>
-       <widget class="QLabel" name="label_12">
+       <widget class="QLabel" name="setSetPointLabel">
         <property name="font">
          <font>
+          <family>Arial</family>
+          <pointsize>12</pointsize>
           <weight>50</weight>
           <bold>false</bold>
          </font>
         </property>
         <property name="text">
-         <string>Setpoint /K</string>
+         <string>Setpoint [K]</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="setSetpointValue">
+       <widget class="QLineEdit" name="setSetPointValue">
         <property name="font">
          <font>
+          <family>Arial</family>
+          <pointsize>12</pointsize>
           <weight>50</weight>
           <bold>false</bold>
          </font>
@@ -286,6 +313,8 @@
        <widget class="QPushButton" name="setSetPoint">
         <property name="font">
          <font>
+          <family>Arial</family>
+          <pointsize>12</pointsize>
           <weight>50</weight>
           <bold>false</bold>
          </font>
@@ -306,11 +335,13 @@
        <height>29</height>
       </rect>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <layout class="QHBoxLayout" name="heaterSettinghorizontalLayout">
       <item>
-       <widget class="QPushButton" name="setSetPoint_2">
+       <widget class="QPushButton" name="setHeaterSettingLow">
         <property name="font">
          <font>
+          <family>Arial</family>
+          <pointsize>12</pointsize>
           <weight>50</weight>
           <bold>false</bold>
          </font>
@@ -318,12 +349,20 @@
         <property name="text">
          <string>Low</string>
         </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="setSetPoint_3">
+       <widget class="QPushButton" name="setHeaterSettingMid">
         <property name="font">
          <font>
+          <family>Arial</family>
+          <pointsize>12</pointsize>
           <weight>50</weight>
           <bold>false</bold>
          </font>
@@ -331,12 +370,20 @@
         <property name="text">
          <string>Mid</string>
         </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="setSetPoint_4">
+       <widget class="QPushButton" name="setHeaterSettingHigh">
         <property name="font">
          <font>
+          <family>Arial</family>
+          <pointsize>12</pointsize>
           <weight>50</weight>
           <bold>false</bold>
          </font>
@@ -344,22 +391,27 @@
         <property name="text">
          <string>High</string>
         </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
      </layout>
     </widget>
    </widget>
-   <widget class="QGroupBox" name="groupBox_4">
+   <widget class="QGroupBox" name="liveViewGroupBox">
     <property name="geometry">
      <rect>
       <x>340</x>
       <y>20</y>
       <width>361</width>
-      <height>511</height>
+      <height>521</height>
      </rect>
     </property>
     <property name="font">
      <font>
+      <family>Arial</family>
+      <pointsize>12</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -373,22 +425,162 @@
        <x>10</x>
        <y>19</y>
        <width>341</width>
-       <height>481</height>
+       <height>491</height>
       </rect>
      </property>
     </widget>
    </widget>
-   <widget class="QLabel" name="label_13">
+   <widget class="QLabel" name="savePathLabel">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>320</y>
+      <y>300</y>
       <width>101</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
      <string>Log file path:</string>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="advancedParametersBox">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>350</y>
+      <width>261</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Arial</family>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="title">
+     <string>Advanced Parameters</string>
+    </property>
+    <widget class="QLabel" name="pidHeaderLabel">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>131</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>PID Parameters</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="horizontalLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>251</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="pidHorizontalLayout">
+      <item>
+       <widget class="QLabel" name="pValueLabel">
+        <property name="text">
+         <string>P</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="pValue"/>
+      </item>
+      <item>
+       <widget class="QLabel" name="iValueLabel">
+        <property name="text">
+         <string>I</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="iValue"/>
+      </item>
+      <item>
+       <widget class="QLabel" name="dValueLabel">
+        <property name="text">
+         <string>D</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="dValue"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pidSet">
+        <property name="text">
+         <string>Set</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="horizontalLayoutWidget_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>100</y>
+       <width>251</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="timeIntervalHorizontalLayout">
+      <item>
+       <widget class="QLabel" name="timeIntervalLabel">
+        <property name="text">
+         <string>Upate time [sec]</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="timeInterval">
+        <property name="text">
+         <string>10</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="timeIntervalSet">
+        <property name="text">
+         <string>Set</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="startStop">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>500</y>
+      <width>261</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Arial</family>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Start</string>
     </property>
    </widget>
   </widget>
