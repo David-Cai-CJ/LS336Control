@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>717</width>
-    <height>575</height>
+    <height>572</height>
    </rect>
   </property>
   <property name="font">
@@ -270,9 +270,9 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>20</y>
-       <width>241</width>
-       <height>29</height>
+       <y>30</y>
+       <width>254</width>
+       <height>30</height>
       </rect>
      </property>
      <layout class="QHBoxLayout" name="setSetPointhorizontalLayout">
@@ -292,20 +292,15 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="setSetPointValue">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>12</pointsize>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
+       <widget class="QDoubleSpinBox" name="setSetPointValue_2">
+        <property name="maximum">
+         <double>410.000000000000000</double>
         </property>
-        <property name="text">
-         <string>293.00</string>
+        <property name="singleStep">
+         <double>0.100000000000000</double>
         </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        <property name="value">
+         <double>293.000000000000000</double>
         </property>
        </widget>
       </item>
@@ -449,7 +444,7 @@
       <x>20</x>
       <y>350</y>
       <width>261</width>
-      <height>141</height>
+      <height>151</height>
      </rect>
     </property>
     <property name="font">
@@ -476,47 +471,103 @@
       <string>PID Parameters</string>
      </property>
     </widget>
-    <widget class="QWidget" name="horizontalLayoutWidget">
+    <widget class="QWidget" name="horizontalLayoutWidget_2">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>50</y>
-       <width>251</width>
+       <y>120</y>
+       <width>181</width>
        <height>31</height>
       </rect>
      </property>
-     <layout class="QHBoxLayout" name="pidHorizontalLayout">
+     <layout class="QHBoxLayout" name="timeIntervalHorizontalLayout">
       <item>
-       <widget class="QLabel" name="pValueLabel">
+       <widget class="QLabel" name="timeIntervalLabel">
         <property name="text">
-         <string>P</string>
+         <string>Upate time [s]</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="pValue"/>
+       <widget class="QSpinBox" name="timeInterval">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>3600</number>
+        </property>
+        <property name="value">
+         <number>10</number>
+        </property>
+       </widget>
       </item>
-      <item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="gridLayoutWidget_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>241</width>
+       <height>64</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="1">
+       <widget class="QDoubleSpinBox" name="pValue">
+        <property name="maximum">
+         <double>1000.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.010000000000000</double>
+        </property>
+        <property name="value">
+         <double>400.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
        <widget class="QLabel" name="iValueLabel">
         <property name="text">
          <string>I</string>
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QLineEdit" name="iValue"/>
+      <item row="0" column="0">
+       <widget class="QLabel" name="pValueLabel">
+        <property name="text">
+         <string>P</string>
+        </property>
+       </widget>
       </item>
-      <item>
+      <item row="0" column="3">
+       <widget class="QDoubleSpinBox" name="iValue">
+        <property name="maximum">
+         <double>1000.000000000000000</double>
+        </property>
+        <property name="value">
+         <double>2.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
        <widget class="QLabel" name="dValueLabel">
         <property name="text">
          <string>D</string>
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QLineEdit" name="dValue"/>
+      <item row="1" column="1">
+       <widget class="QDoubleSpinBox" name="dValue">
+        <property name="maximum">
+         <double>200.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.010000000000000</double>
+        </property>
+       </widget>
       </item>
-      <item>
+      <item row="1" column="3">
        <widget class="QPushButton" name="pidSet">
         <property name="text">
          <string>Set</string>
@@ -525,33 +576,16 @@
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="horizontalLayoutWidget_2">
+    <widget class="QWidget" name="verticalLayoutWidget">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>100</y>
-       <width>251</width>
+       <x>200</x>
+       <y>120</y>
+       <width>51</width>
        <height>31</height>
       </rect>
      </property>
-     <layout class="QHBoxLayout" name="timeIntervalHorizontalLayout">
-      <item>
-       <widget class="QLabel" name="timeIntervalLabel">
-        <property name="text">
-         <string>Upate time [sec]</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="timeInterval">
-        <property name="text">
-         <string>10</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
+     <layout class="QVBoxLayout" name="timeIntervalSetVerticalLayout">
       <item>
        <widget class="QPushButton" name="timeIntervalSet">
         <property name="text">
@@ -565,10 +599,10 @@
    <widget class="QPushButton" name="startStop">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>500</y>
-      <width>261</width>
-      <height>41</height>
+      <x>70</x>
+      <y>510</y>
+      <width>181</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">

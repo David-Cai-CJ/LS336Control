@@ -108,7 +108,7 @@ class local_intrument():
             range (string): ('OFF', 'LO', 'MID', 'HI') key of dictonary self.heater_range
 
         Raises:
-            CommunicationFailure: Is raised if heater range was not set corrtectly
+            CommunicationFailure: Is raised if heater range was not set correctly
 
         Returns:
             Model336HeaterRange entry: returns entry of IntEnum corresponding to set heater range
@@ -118,6 +118,24 @@ class local_intrument():
         if new_range != self.heater_range[range]:
             raise CommunicationFailure("Heater was not set correctly")
         return new_range
+
+    def set_heater_pid(self, pid_values):
+        """sets the pid values of closed loop controller
+
+        Args:
+            pid_values (3-tuple of floats): (p_value, i_value, d_value) key of dictionary self.heater_range
+
+        Raises:
+            CommunicationFailure: Is raised if heater range was not set correctly
+
+        Returns:
+            Model336HeaterRange entry: returns entry of IntEnum corresponding to set heater range
+        """
+        self.instrument.set_heater_pid(self.heater_channel, pid_values[0],pid_values[1],pid_values[2])
+        new_pid_values = self.get_heater_pid
+        if new_pid_values != pid_values:
+            raise CommunicationFailure("PID values were not set correctly")
+        return new_pid_values
 
 
 class CommunicationFailure(Exception):
