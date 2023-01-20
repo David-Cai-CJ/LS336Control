@@ -1,14 +1,15 @@
 from functools import partial
 from datetime import datetime
-import numpy as np
-from math import floor
-
-from PyQt5.QtWidgets import QMessageBox
-from PyQt5.QtCore import Qt
-import pyqtgraph as pg
-
-from ls336.ui import ls336ui
-from ls336.lib.ls_interface import  local_intrument
+from time import mktime
+# import numpy as np
+# from math import floor
+#
+# from PyQt5.QtWidgets import QMessageBox
+# from PyQt5.QtCore import Qt
+# import pyqtgraph as pg
+#
+# from ls336.ui import ls336ui
+from ls336.lib.ls_interface import local_intrument
 
 
 class ctrl_ui():
@@ -105,7 +106,14 @@ class ctrl_ui():
         self._ui.displayHeaterPower.setText(f"{self.heater_power[-1]:.2f}")
 
         #TODO updating plots
+        # _x = [datetime.strptime(t, '%Y.%m.%d %H:%M:%S') for t in self.time_stamp]
+        _x = [mktime(dt.timetuple()) for dt in self.time_stamp]
 
+        self._ui.liveViewSampleTempPlot.setData(self.sample_temp, x=_x)
+        self._ui.liveViewTipTempPlot.setData(self.tip_temp, x=_x)
+        self._ui.liveViewHeaterPlot.setData(self.heater_power, x=_x)
+
+        # logging values
         self._logFileUpdate(self.time_stamp[-1],"live_temp", (
             self.sample_temp[-1], self.tip_temp[-1], self.heater_power[-1]
         ))

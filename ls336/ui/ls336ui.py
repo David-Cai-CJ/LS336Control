@@ -20,25 +20,51 @@ class ls336_control(QMainWindow):
 
     def defineLiveViewLayout(self):
         ### set live view properties
-        self.liveViewTemp = self.liveView.addPlot(0,0)
-        self.liveViewTemp.getAxis('left').setWidth(50)
-        self.liveViewHeater = self.liveView.addPlot(1,0)
-        self.liveViewHeater.getAxis('left').setWidth(50)
-        # Temperature plot
-        self.liveViewTemp.setLabel('left', 'Temp. [K]')
-        self.liveViewTemp.setXLink(self.liveViewHeater)
-        self.liveViewTemp.showGrid(x = True, y = True, alpha = 0.5)
-        tempXAxis = self.liveViewTemp.getAxis('bottom')
-        tempXAxis.setPen(255,255,255,0)
-        tempXAxis.setStyle(showValues = False)
+        self.liveViewSampleTemp = self.liveView.addPlot(0,0)
+        self.liveViewSampleTemp.getAxis('left').setWidth(80)
+        self.liveViewTipTemp = self.liveView.addPlot(1,0)
+        self.liveViewTipTemp.getAxis('left').setWidth(80)
+        self.liveViewHeater = self.liveView.addPlot(2,0)
+        self.liveViewHeater.getAxis('left').setWidth(80)
+
+
+
+        # Sample Temperature plot
+        self.liveViewSampleTemp.setLabel('left', 'T Sample [K]')
+        self.liveViewSampleTemp.setXLink(self.liveViewHeater)
+
+        self.liveViewSampleTempPlot = self.liveViewSampleTemp.plot(pen = 'r')
+        self.liveViewSampleTemp.setAxisItems({"bottom": pg.DateAxisItem()})
+        SampleTempXAxis = self.liveViewSampleTemp.getAxis('bottom')
+        # SampleTempXAxis.setPen(255,255,255,0)
+        SampleTempXAxis.setStyle(showValues = False)
+        self.liveViewSampleTemp.showGrid(x=True, y=True, alpha=0.5)
+
+        # Tip Temperature plot
+        self.liveViewTipTemp.setLabel('left', 'T Tip [K]')
+        self.liveViewTipTemp.setXLink(self.liveViewHeater)
+
+        self.liveViewTipTempPlot = self.liveViewTipTemp.plot(pen='b')
+        self.liveViewTipTemp.setAxisItems({"bottom": pg.DateAxisItem()})
+        TipTempXAxis = self.liveViewTipTemp.getAxis('bottom')
+        # TipTempXAxis.setPen(255, 255, 255, 0)
+        TipTempXAxis.setStyle(showValues=False)
+        self.liveViewTipTemp.showGrid(x=True, y=True, alpha=0.5)
+
         # Heater power plot
-        self.liveViewHeater.setLabel('left', 'Heater [V]')
-        self.liveViewHeater.setLimits(yMin=-0.05)
+        self.liveViewHeater.setLabel('left', 'Heater [%]')
+        # self.liveViewHeater.setLimits(yMin=-0.05)
         self.liveViewHeater.setXLink(self.liveViewHeater)
+        self.liveViewHeaterPlot = self.liveViewHeater.plot(pen='g')
+        self.liveViewHeater.setAxisItems({"bottom": pg.DateAxisItem()})
         tempXHeater = self.liveViewHeater.getAxis('bottom')
-        tempXHeater.setStyle(showValues = False)
-        tempXHeater.setPen(255,255,255,0)
+        tempXHeater.setStyle(showValues = True)
+        # tempXHeater.setPen(255,255,255,0)
         self.liveViewHeater.showGrid(x = True, y = True, alpha = 0.5)
+
+        self.liveViewSampleTemp.enableAutoRange()
+        self.liveViewTipTemp.enableAutoRange()
+        self.liveViewHeater.enableAutoRange()
 
     def closeEvent(self, event):
         self.read_loop.stop()

@@ -4,7 +4,7 @@ from lakeshore.model_336 import Model336HeaterRange
 
 # # connects to first available ls336 control. If no instrument is found specify port number
 
-DEBUG = False
+DEBUG = True
 
 if DEBUG == False:
     class local_intrument():
