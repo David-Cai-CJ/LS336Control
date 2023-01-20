@@ -1,3 +1,4 @@
+from time import sleep
 from lakeshore import Model336
 from lakeshore.model_336 import Model336HeaterRange
 
@@ -97,6 +98,7 @@ if DEBUG == False:
                 float: new temperature setpoint in Kelvin
             """
             self.instrument.set_control_setpoint(self.heater_channel, setpoint)
+            sleep(0.1) #wait for controler to set new value
             setpoint_new = self.get_setpoint
             if setpoint_new != setpoint:
                 raise CommunicationFailure("Setpoint was not set correctly!")
@@ -115,6 +117,7 @@ if DEBUG == False:
                 Model336HeaterRange entry: returns entry of IntEnum corresponding to set heater range
             """
             self.instrument.set_heater_range(self.heater_channel, self.heater_range[range])
+            sleep(0.1) #wait for controler to set new value
             new_range = self.get_heater_range
             if new_range != self.heater_range[range]:
                 raise CommunicationFailure("Heater was not set correctly")
@@ -133,6 +136,7 @@ if DEBUG == False:
                 Model336HeaterRange entry: returns entry of IntEnum corresponding to set heater range
             """
             self.instrument.set_heater_pid(self.heater_channel, pid_values[0],pid_values[1],pid_values[2])
+            sleep(0.1) #wait for controler to set new value
             new_pid_values = self.get_heater_pid
             if new_pid_values != pid_values:
                 raise CommunicationFailure("PID values were not set correctly")
