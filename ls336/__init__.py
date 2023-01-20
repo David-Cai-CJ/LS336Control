@@ -1,6 +1,6 @@
 import os
 
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 __port__ = 0
 
 

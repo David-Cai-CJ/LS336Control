@@ -16,7 +16,7 @@ class ctrl_ui():
         self._ui = ui
         self.global_timestamp = datetime.now()
         self.save_path = None
-        self.temp_setpoint  = None
+        self.temp_setpoint = None
         self.heater_mode = None
         self.read_time_interval = 10
         self.pid_values = (0,0,0)
@@ -32,7 +32,7 @@ class ctrl_ui():
         # - read all set values from instrument and update UI
         self.ls336 = local_intrument(heater_channel)
         self._ui.ls336 = self.ls336
-
+        self.startUp(self.ls336)
         self.connectSignals(self.ls336)
 
     def connectSignals(self, controller_instance):
@@ -47,18 +47,18 @@ class ctrl_ui():
 
         # Heater Setting
         self._ui.setHeaterSettingOff.clicked.connect(partial(self._setHeaterMode,controller_instance,"OFF"))
-        self._ui.setHeaterSettingLow.clicked.connect(partial(self._setHeaterMode,controller_instance,"LOW"))
+        self._ui.setHeaterSettingLow.clicked.connect(partial(self._setHeaterMode,controller_instance,"LO"))
         self._ui.setHeaterSettingMid.clicked.connect(partial(self._setHeaterMode,controller_instance,"MID"))
-        self._ui.setHeaterSettingHigh.clicked.connect(partial(self._setHeaterMode,controller_instance,"HIGH"))
+        self._ui.setHeaterSettingHigh.clicked.connect(partial(self._setHeaterMode,controller_instance,"HI"))
 
         self._ui.setHeaterSettingOff.clicked.connect(partial(self._getHeaterMode, controller_instance))
         self._ui.setHeaterSettingLow.clicked.connect(partial(self._getHeaterMode, controller_instance))
         self._ui.setHeaterSettingMid.clicked.connect(partial(self._getHeaterMode, controller_instance))
-        self._ui.setHeaterSettingHigh.clicked.connec(partial(self._getHeaterMode, controller_instance))
+        self._ui.setHeaterSettingHigh.clicked.connect(partial(self._getHeaterMode, controller_instance))
 
         # PID Setting
-        self._ui.pidSet.clicked.clicked.connect(partial(self._setPidValues, controller_instance))
-        self._ui.pidSet.clicked.clicked.connect(partial(self._getPidValues, controller_instance))
+        self._ui.pidSet.clicked.connect(partial(self._setPidValues, controller_instance))
+        self._ui.pidSet.clicked.connect(partial(self._getPidValues, controller_instance))
 
         # update time
         self._ui.timeIntervalSet.clicked.connect(self._updateUpdateTime)
@@ -68,7 +68,7 @@ class ctrl_ui():
         self._ui.startStop.clicked.connect(self._startStopReadLoop)
 
         # Read out loop
-        self._ui.read_loop.timeout.connect()
+        self._ui.read_loop.timeout.connect(partial(self._readLiveParameters, controller_instance))
 
     def startUp(self, controller_instance):
         """
@@ -144,7 +144,7 @@ class ctrl_ui():
         Sets temperature set point of ls336 temperature controller to value specified by ui.setSetPointValue
         :param controller_instance: ls336 controller instance (local_instrument())
         """
-        __setpoint = self._ui.setSetPointValue.setValue
+        __setpoint = self._ui.setSetPointValue.value()
         controller_instance.set_setpoint(__setpoint)
 
     def _getHeaterMode(self, controller_instance):
@@ -202,7 +202,7 @@ class ctrl_ui():
         sets P,I and D values of controller to values specified in ui.pValue/iValue/dValue, respectively
         :param controller_instance: ls336 controller instance (local_instrument())
         """
-        __pid_values = (self._ui.pValue.value,self._ui.iValue.value,self._ui.dValue.value)
+        __pid_values = (self._ui.pValue.value(),self._ui.iValue.value(),self._ui.dValue.value())
         controller_instance.set_heater_pid(__pid_values)
 
     def _setUpdateTime(self, time_interval):
@@ -217,13 +217,13 @@ class ctrl_ui():
         """
         Gets update time from ui.timeInterval
         """
-        self.read_time_interval = self._ui.timeInterval.value
+        self.read_time_interval = self._ui.timeInterval.value()
 
     def _startStopReadLoop(self):
         """
         Starts or stops the read loop Qtimer
         """
-        _active = self._ui.read_loop.active
+        _active = self._ui.read_loop.isActive()
         if _active == False:
             self._ui.read_loop.start(self.read_time_interval*1000)
             self._ui.startStop.setText("Stop")
@@ -236,5 +236,6 @@ class ctrl_ui():
         Updates the read loop time interval to value self.read_time_interval
         :return:
         """
+        self._updateUpdateTime()
         self._ui.read_loop.setInterval(self.read_time_interval*1000)
 

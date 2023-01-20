@@ -1,3 +1,3 @@
-from ui import ls336ui
+from .ui import ls336ui
 
 ls336ui.main()

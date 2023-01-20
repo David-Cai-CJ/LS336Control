@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>717</width>
-    <height>572</height>
+    <height>583</height>
    </rect>
   </property>
   <property name="font">
@@ -23,19 +23,6 @@
    <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLineEdit" name="savePath">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>320</y>
-      <width>261</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>ls336_log</string>
-    </property>
-   </widget>
    <widget class="QGroupBox" name="liveParametersBox">
     <property name="geometry">
      <rect>
@@ -292,7 +279,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QDoubleSpinBox" name="setSetPointValue_2">
+       <widget class="QDoubleSpinBox" name="setSetPointValue">
         <property name="maximum">
          <double>410.000000000000000</double>
         </property>
@@ -400,7 +387,7 @@
       <x>340</x>
       <y>20</y>
       <width>361</width>
-      <height>521</height>
+      <height>531</height>
      </rect>
     </property>
     <property name="font">
@@ -418,33 +405,20 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>19</y>
+       <y>30</y>
        <width>341</width>
        <height>491</height>
       </rect>
      </property>
     </widget>
    </widget>
-   <widget class="QLabel" name="savePathLabel">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>300</y>
-      <width>101</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Log file path:</string>
-    </property>
-   </widget>
    <widget class="QGroupBox" name="advancedParametersBox">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>350</y>
+      <y>300</y>
       <width>261</width>
-      <height>151</height>
+      <height>211</height>
      </rect>
     </property>
     <property name="font">
@@ -595,12 +569,38 @@
       </item>
      </layout>
     </widget>
+    <widget class="QLineEdit" name="savePath">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>180</y>
+       <width>241</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>ls336_log</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="savePathLabel">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>160</y>
+       <width>101</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Log file path:</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QPushButton" name="startStop">
     <property name="geometry">
      <rect>
       <x>70</x>
-      <y>510</y>
+      <y>520</y>
       <width>181</width>
       <height>31</height>
      </rect>
