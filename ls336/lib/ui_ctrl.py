@@ -106,12 +106,14 @@ class ctrl_ui():
         self._ui.displayHeaterPower.setText(f"{self.heater_power[-1]:.2f}")
 
         #TODO updating plots
-        # _x = [datetime.strptime(t, '%Y.%m.%d %H:%M:%S') for t in self.time_stamp]
+
         _x = [mktime(dt.timetuple()) for dt in self.time_stamp]
 
         self._ui.liveViewSampleTempPlot.setData(self.sample_temp, x=_x)
         self._ui.liveViewTipTempPlot.setData(self.tip_temp, x=_x)
         self._ui.liveViewHeaterPlot.setData(self.heater_power, x=_x)
+
+
 
         # logging values
         self._logFileUpdate(self.time_stamp[-1],"live_temp", (
@@ -235,6 +237,9 @@ class ctrl_ui():
         if _active == False:
             self._ui.read_loop.start(self.read_time_interval*1000)
             self._ui.startStop.setText("Stop")
+            self._ui.liveViewSampleTemp.enableAutoRange()
+            self._ui.liveViewTipTemp.enableAutoRange()
+            self._ui.liveViewHeater.enableAutoRange()
         else:
             self._ui.read_loop.stop()
             self._ui.startStop.setText("Start")

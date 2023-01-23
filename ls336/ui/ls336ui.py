@@ -62,9 +62,7 @@ class ls336_control(QMainWindow):
         # tempXHeater.setPen(255,255,255,0)
         self.liveViewHeater.showGrid(x = True, y = True, alpha = 0.5)
 
-        self.liveViewSampleTemp.enableAutoRange()
-        self.liveViewTipTemp.enableAutoRange()
-        self.liveViewHeater.enableAutoRange()
+
 
     def closeEvent(self, event):
         self.read_loop.stop()
