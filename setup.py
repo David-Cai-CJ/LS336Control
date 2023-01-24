@@ -9,6 +9,6 @@ setup(name='LS336Control',
       author_email='sebastian.hammer@mail.mcgill.ca',
       url='https://github.com/HammerSeb/LS336Control',
       packages= find_packages(),
-      install_requires=['numpy', 'PyQT5', 'pyqtgraph','lakeshore'],
+      install_requires=['numpy', 'PyQT5', 'pyqtgraph','lakeshore','h5py'],
       include_package_data = True
      )

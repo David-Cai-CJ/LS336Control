@@ -11,7 +11,7 @@ pip install git+https://github.com/HammerSeb/LS336Control.git
 
 Use as module via
 ```commandline
-python -m LS336Control.ls336
+python -m ls336
 ```
 
 This opens a UI window which automatically connects to the next available Lakeshore LS336 controller.
