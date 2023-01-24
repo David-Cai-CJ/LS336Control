@@ -251,7 +251,7 @@ class ctrl_ui():
         Sets temperature set point of ls336 temperature controller to value specified by ui.setSetPointValue
         :param controller_instance: ls336 controller instance (local_instrument())
         """
-        __setpoint = self._ui.setSetPointValue.value()
+        __setpoint = round(self._ui.setSetPointValue.value()*1000)/1000
         controller_instance.set_setpoint(__setpoint)
 
     def _getHeaterMode(self, controller_instance):
