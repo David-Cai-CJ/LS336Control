@@ -312,7 +312,7 @@ class ctrl_ui():
         sets P,I and D values of controller to values specified in ui.pValue/iValue/dValue, respectively
         :param controller_instance: ls336 controller instance (local_instrument())
         """
-        __pid_values = (self._ui.pValue.value(),self._ui.iValue.value(),self._ui.dValue.value())
+        __pid_values = (round(self._ui.pValue.value()*10)/10,round(self._ui.iValue.value()*10)/10,round(self._ui.dValue.value()*10)/10)
         controller_instance.set_heater_pid(__pid_values)
 
     def _setUpdateTime(self, time_interval):
