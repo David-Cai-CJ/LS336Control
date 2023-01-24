@@ -4,7 +4,6 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow 
 from PyQt5.QtCore import QTimer
 import pyqtgraph as pg
-from qdarkstyle import load_stylesheet_pyqt5
 
 from .. import get_base_path
 from ..lib.ui_ctrl import ctrl_ui
@@ -70,7 +69,6 @@ class ls336_control(QMainWindow):
 def main():
     HEATER_CHANNEL = 1
     ls336 = QApplication(sys.argv)
-    # ls336.setStyleSheet(load_stylesheet_pyqt5)
     gui = ls336_control()
     gui.show()
     ctrl_ui(gui, HEATER_CHANNEL) #initializes controler
