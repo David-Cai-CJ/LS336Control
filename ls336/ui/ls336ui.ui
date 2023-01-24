@@ -581,30 +581,17 @@
       </item>
      </layout>
     </widget>
-    <widget class="QLineEdit" name="savePath">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>180</y>
-       <width>241</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>ls336_log</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="savePathLabel">
+    <widget class="QPushButton" name="setSavePath">
      <property name="geometry">
       <rect>
        <x>10</x>
        <y>160</y>
-       <width>101</width>
-       <height>21</height>
+       <width>181</width>
+       <height>31</height>
       </rect>
      </property>
      <property name="text">
-      <string>Log file path:</string>
+      <string>Set Log Directory</string>
      </property>
     </widget>
    </widget>
@@ -630,7 +617,7 @@
     </property>
    </widget>
   </widget>
-  <widget class="QStatusBar" name="statusConnection">
+  <widget class="QStatusBar" name="statusBar">
    <property name="enabled">
     <bool>true</bool>
    </property>

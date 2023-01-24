@@ -1,22 +1,18 @@
 from functools import partial
 from datetime import datetime
 from time import mktime
-# import numpy as np
-# from math import floor
-#
-# from PyQt5.QtWidgets import QMessageBox
-# from PyQt5.QtCore import Qt
-# import pyqtgraph as pg
-#
-# from ls336.ui import ls336ui
+import h5py
+from os.path import join, exists
+from PyQt5.QtWidgets import QFileDialog
 from ls336.lib.ls_interface import local_intrument
-
+from .. import get_base_path
 
 class ctrl_ui():
     def __init__(self, ui, heater_channel):
         self._ui = ui
         self.global_timestamp = datetime.now()
-        self.save_path = None
+        self.save_path = get_base_path()
+        self.log_file = None
         self.temp_setpoint = None
         self.heater_mode = None
         self.read_time_interval = 10
@@ -65,8 +61,11 @@ class ctrl_ui():
         self._ui.timeIntervalSet.clicked.connect(self._updateUpdateTime)
         self._ui.timeIntervalSet.clicked.connect(self._updateReadLoop)
 
+        # set logfile path
+        self._ui.setSavePath.clicked.connect(self._setLogPath)
+
         # Start Read out loop
-        self._ui.startStop.clicked.connect(self._startStopReadLoop)
+        self._ui.startStop.clicked.connect(partial(self._startStopReadLoop, controller_instance))
 
         # Read out loop
         self._ui.read_loop.timeout.connect(partial(self._readLiveParameters, controller_instance))
@@ -85,6 +84,7 @@ class ctrl_ui():
         self._getPidValues(controller_instance)
         self._setUpdateTime(self.read_time_interval)
 
+        self._ui.statusBar.showMessage(f"Log file save path: {self.save_path}")
 
     def _readLiveParameters(self, controller_instance):
         """
@@ -105,30 +105,95 @@ class ctrl_ui():
         self._ui.displayTipTemp.setText(f"{self.tip_temp[-1]:.3f}")
         self._ui.displayHeaterPower.setText(f"{self.heater_power[-1]:.2f}")
 
-        #TODO updating plots
-
+        # plotting values
         _x = [mktime(dt.timetuple()) for dt in self.time_stamp]
 
         self._ui.liveViewSampleTempPlot.setData(self.sample_temp, x=_x)
         self._ui.liveViewTipTempPlot.setData(self.tip_temp, x=_x)
         self._ui.liveViewHeaterPlot.setData(self.heater_power, x=_x)
 
-
-
         # logging values
         self._logFileUpdate(self.time_stamp[-1],"live_temp", (
             self.sample_temp[-1], self.tip_temp[-1], self.heater_power[-1]
         ))
-    def _logFileUpdate(self,time_stamp, mode,value):
-        """
-        creates a log file as a npz-file with the following entries:
 
-        Tsample: 2-n-array [time stamps, sample temperature]
-        Ttip: 2-n-array [time stamps, tip temperature]
-        Pheater: 2-n-array [time stamps, heater power]
-        Tset: 2-m-array [time stamps, temperature set point]
-        HeaterMode: 2-k-array [time stamps, heater mode]
-        Pid: 4-h-array [time stamps, p-value, i-value, d-value]
+    def _setLogPath(self):
+        """
+        Open a QFileDialog to choose save directory for log file. Path is stored in self.save_path
+        """
+        self.save_path = QFileDialog.getExistingDirectory(self._ui,
+                                                  "Choose log file directory",
+                                                    directory=get_base_path())
+
+        self._ui.statusBar.showMessage(f"Log file save path: {self.save_path}")
+
+    def _createLogFile(self):
+        """
+        Creates hdf5 log file at self.save_path if the file does not exist yet.
+        The file can store 7e5 data points for each entry (~ 8 days of entries when reading every second)
+        The file has the following data entries:
+        
+        Sample temperature
+        group T_sample: time = list of epoch time as floats from datetime.datetime.timestamp()
+                        temp = list of floats 
+                        
+        Tip temperature
+        group T_tip:    time = list of epoch time as floats from datetime.datetime.timestamp()
+                        temp = list of floats 
+        Heater Power
+        group P_heater: time = list of epoch time as floats from datetime.datetime.timestamp()
+                        temp = list of floats 
+                        
+        Temperature set point
+        group T_set_point:  time = list of epoch time as floats from datetime.datetime.timestamp()
+                            set_point = list of floats
+
+        Heater range
+        group Heater_mode:  time = list of epoch time as floats from datetime.datetime.timestamp()
+                            heater_mode = list of strings: "off","low", "mid", "high"
+
+        PID parameters
+        group PID_values:   time = list of epoch time as floats from datetime.datetime.timestamp()
+                            p = list of floats
+                            i = list of floats
+                            d = list of floats
+
+        """
+        _creation_timestamp = datetime.now()
+        _timestamp_string = f"{_creation_timestamp.date().isoformat()}_{_creation_timestamp.hour}h_{_creation_timestamp.minute}m_{_creation_timestamp.second}s"
+        self.log_file = join(self.save_path, f"ls336_log_{_timestamp_string}.hdf5")
+        with h5py.File(self.log_file, "w") as f:
+            # Live View data
+            t_sample_group = f.create_group("T_sample")
+            t_sample_group.create_dataset("time", data = [], maxshape=(7e5,), chunks=True)
+            t_sample_group.create_dataset("data", data = [], maxshape=(7e5,), chunks=True)
+
+            t_tip_group = f.create_group("T_tip")
+            t_tip_group.create_dataset("time", data = [], maxshape=(7e5,), chunks=True)
+            t_tip_group.create_dataset("data", data = [], maxshape=(7e5,), chunks=True)
+
+            p_heater_group = f.create_group("P_heater")
+            p_heater_group.create_dataset("time", data = [], maxshape=(7e5,), chunks=True)
+            p_heater_group.create_dataset("data", data = [], maxshape=(7e5,), chunks=True)
+
+            # Controller Settings
+            t_setpoint_group = f.create_group("T_set_point")
+            t_setpoint_group.create_dataset("time", data = [], maxshape=(7e5,), chunks=True)
+            t_setpoint_group.create_dataset("set_point", data = [], maxshape=(7e5,), chunks=True)
+
+            heater_mode_group = f.create_group("Heater_mode")
+            heater_mode_group.create_dataset("time", data = [], maxshape=(7e5,), chunks=True)
+            heater_mode_group.create_dataset("heater_mode", data = [], maxshape=(7e5,), chunks=True, dtype="S4")
+
+            pid_values_group = f.create_group("PID_values")
+            pid_values_group.create_dataset("time", data = [], maxshape=(7e5,), chunks=True)
+            pid_values_group.create_dataset("p", data = [], maxshape=(7e5,), chunks=True)
+            pid_values_group.create_dataset("i", data=[], maxshape=(7e5,), chunks=True)
+            pid_values_group.create_dataset("d", data=[], maxshape=(7e5,), chunks=True)
+
+    def _logFileUpdate(self,time_stamp,mode,value):
+        """
+        updates the log file defined in self.log_file by appending the respective lists of values
 
         :param time_stamp (datetime): time stamp for log entry
         :param mode (string): selects mode write mode. allowed values "live_temp", "set_point", "heater_mode" ,"pid"
@@ -138,7 +203,38 @@ class ctrl_ui():
                             heater_mode: string ("off","low", "mid", "high")
                             pid: 3-tuple of floats (P, I, D)
         """
-        pass
+        with h5py.File(self.log_file, "a") as f:
+            if mode == "live_temp":
+                for idx, group in enumerate(["T_sample", "T_tip", "P_heater"]):
+                    _time = f[f"{group}/time"]
+                    _time.resize(_time.shape[0]+1,axis=0)
+                    _time[-1] = time_stamp.timestamp()
+                    _value = f[f"{group}/data"]
+                    _value.resize(_value.shape[0] + 1, axis=0)
+                    _value[-1] = value[idx]
+            elif mode == "set_point":
+                _time = f["T_set_point/time"]
+                _time.resize(_time.shape[0] + 1, axis=0)
+                _time[-1] = time_stamp.timestamp()
+                _value = f["T_set_point/set_point"]
+                _value.resize(_value.shape[0] + 1, axis=0)
+                _value[-1] = value
+            elif mode == "heater_mode":
+                _time = f["Heater_mode/time"]
+                _time.resize(_time.shape[0] + 1, axis=0)
+                _time[-1] = time_stamp.timestamp()
+                _value = f["Heater_mode/heater_mode"]
+                _value.resize(_value.shape[0] + 1, axis=0)
+                _value[-1] = value
+            elif mode == "pid":
+                _time = f["PID_values/time"]
+                _time.resize(_time.shape[0] + 1, axis=0)
+                _time[-1] = time_stamp.timestamp()
+                for idx, name in enumerate(["p", "i", "d"]):
+                    _value = f[f"PID_values/{name}"]
+                    _value.resize(_value.shape[0] + 1, axis=0)
+                    _value[-1] = value[idx]
+
     def _getSetPoint(self, controller_instance):
         """
         Gets temperature set point from controller and writes it to ui.setSetPointValue
@@ -147,7 +243,8 @@ class ctrl_ui():
         self.temp_setpoint = controller_instance.get_setpoint
         self._ui.setSetPointValue.setValue(self.temp_setpoint)
 
-        #TODO trigger log entry
+        if self.log_file != None:
+            self._logFileUpdate(datetime.now(), "set_point", self.temp_setpoint)
 
     def _setSetPoint(self, controller_instance):
         """
@@ -184,7 +281,9 @@ class ctrl_ui():
             self._ui.setHeaterSettingHigh.setChecked(True)
             self._ui.setHeaterSettingOff.setChecked(False)
 
-        # TODO trigger log entry
+
+        if self.log_file != None:
+            self._logFileUpdate(datetime.now(), "heater_mode", self.heater_mode.name)
 
 
     def _setHeaterMode(self, controller_instance, range):
@@ -205,7 +304,8 @@ class ctrl_ui():
         self._ui.iValue.setValue(self.pid_values[1])
         self._ui.dValue.setValue(self.pid_values[2])
 
-        # TODO trigger log entry
+        if self.log_file != None:
+            self._logFileUpdate(datetime.now(), "pid", self.pid_values)
 
     def _setPidValues(self, controller_instance):
         """
@@ -229,7 +329,7 @@ class ctrl_ui():
         """
         self.read_time_interval = self._ui.timeInterval.value()
 
-    def _startStopReadLoop(self):
+    def _startStopReadLoop(self, controller_instance):
         """
         Starts or stops the read loop Qtimer
         """
@@ -240,6 +340,17 @@ class ctrl_ui():
             self._ui.liveViewSampleTemp.enableAutoRange()
             self._ui.liveViewTipTemp.enableAutoRange()
             self._ui.liveViewHeater.enableAutoRange()
+
+            # check if log file exists, and if not create log file
+            if self.log_file == None:
+                self._createLogFile()
+            elif exists(self.log_file) == False:
+                self._createLogFile()
+
+            self._getSetPoint(controller_instance)
+            self._getHeaterMode(controller_instance)
+            self._getPidValues(controller_instance)
+
         else:
             self._ui.read_loop.stop()
             self._ui.startStop.setText("Start")
