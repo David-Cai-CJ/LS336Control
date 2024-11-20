@@ -74,3 +74,6 @@ def main():
     ctrl_ui(gui, HEATER_CHANNEL) #initializes controler
     sys.exit(ls336.exec())
     print("debug finished")
+
+if __name__ == "__main__":
+    main()
