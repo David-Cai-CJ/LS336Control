@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1488</width>
-    <height>992</height>
+    <width>1656</width>
+    <height>893</height>
    </rect>
   </property>
   <property name="font">
@@ -247,7 +247,7 @@
           <property name="title">
            <string>Temperature Control</string>
           </property>
-          <widget class="QWidget" name="">
+          <widget class="QWidget" name="layoutWidget">
            <property name="geometry">
             <rect>
              <x>10</x>
@@ -431,7 +431,7 @@
           <property name="title">
            <string>Advanced Parameters</string>
           </property>
-          <widget class="QWidget" name="">
+          <widget class="QWidget" name="layoutWidget">
            <property name="geometry">
             <rect>
              <x>0</x>
@@ -462,7 +462,7 @@
                 <item>
                  <widget class="QDoubleSpinBox" name="pValue">
                   <property name="decimals">
-                   <number>1</number>
+                   <number>2</number>
                   </property>
                   <property name="maximum">
                    <double>1000.000000000000000</double>
@@ -471,7 +471,7 @@
                    <double>0.100000000000000</double>
                   </property>
                   <property name="value">
-                   <double>400.000000000000000</double>
+                   <double>15.000000000000000</double>
                   </property>
                  </widget>
                 </item>
@@ -489,7 +489,7 @@
                 <item>
                  <widget class="QDoubleSpinBox" name="iValue">
                   <property name="decimals">
-                   <number>1</number>
+                   <number>2</number>
                   </property>
                   <property name="maximum">
                    <double>1000.000000000000000</double>
@@ -498,7 +498,7 @@
                    <double>0.100000000000000</double>
                   </property>
                   <property name="value">
-                   <double>1.000000000000000</double>
+                   <double>600.000000000000000</double>
                   </property>
                  </widget>
                 </item>
@@ -516,7 +516,7 @@
                 <item>
                  <widget class="QDoubleSpinBox" name="dValue">
                   <property name="decimals">
-                   <number>1</number>
+                   <number>2</number>
                   </property>
                   <property name="maximum">
                    <double>200.000000000000000</double>
